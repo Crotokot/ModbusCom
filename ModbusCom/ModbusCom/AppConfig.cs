@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Net.Http;
 
 namespace ModbusCom
 {
@@ -11,7 +12,7 @@ namespace ModbusCom
         private static string DataBasePath = projectPath + @"ModbusCom\DeviceInfo.mdf";
         public static string TablePagePath = projectPath + @"Data\TablePage.html";
         public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=A:\Job\Eris\ModbusTask\ModbusCom\ModbusCom\ModbusCom\DeviceInfo.mdf;Integrated Security=True";
-           // $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataBasePath};Integrated Security=True";
+        // $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataBasePath};Integrated Security=True";
 
 
         public static string DropTableQuery = "DROP TABLE IF EXISTS {0}";
@@ -20,6 +21,13 @@ namespace ModbusCom
         public static string RecordToTableQuery = "INSERT INTO {0} ({1}) VALUES ({2})";
 
         public static string DeviceRegTblName = "DeviceRegisters";
+
+        public static string ServiceURL = "http://localhost:8080/";
+        public static Dictionary<string, int> MethodsTypes = new Dictionary<string, int>()
+        {
+            { HttpMethod.Get.ToString(), 0 },
+            { HttpMethod.Post.ToString(), 1 }
+        };
 
         private static string GetProjectPath()
         {
