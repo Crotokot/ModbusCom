@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Data;
 using System.Linq;
 
+
 namespace ModbusCom
 {
     
-
     class HttpServer
     {
         private HttpListener listener = null;
@@ -85,7 +85,11 @@ namespace ModbusCom
             if (deviceInfoDB != null)
             {
                 DataTable dataTable = deviceInfoDB.ReadData(AppConfig.DeviceRegTblName);
-                MakeRow(ref stringBuilder, dataTable.Columns.Cast<string>().ToArray(), header: true);
+                var colNames = 
+                    dataTable.Columns.Cast<DataColumn>().ToList().Select(
+                        dataCol => dataCol.ColumnName).ToArray();
+                MakeRow(ref stringBuilder, colNames, header: true);                
+                
                 foreach (DataRow row in dataTable.Rows)
                     MakeRow(ref stringBuilder, row.ItemArray);
                 string tblName = AppConfig.DeviceRegTblName,

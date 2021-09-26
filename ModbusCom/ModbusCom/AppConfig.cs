@@ -11,8 +11,8 @@ namespace ModbusCom
         private static string projectPath = GetProjectPath();
         private static string DataBasePath = projectPath + @"ModbusCom\DeviceInfo.mdf";
         public static string TablePagePath = projectPath + @"Data\TablePage.html";
-        public static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=A:\Job\Eris\ModbusTask\ModbusCom\ModbusCom\ModbusCom\DeviceInfo.mdf;Integrated Security=True";
-        // $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataBasePath};Integrated Security=True";
+        public static string ConnectionString = //@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=A:\Job\Eris\ModbusTask\ModbusCom\ModbusCom\ModbusCom\DeviceInfo.mdf;Integrated Security=True";
+         $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataBasePath};Integrated Security=True";
 
 
         public static string DropTableQuery = "DROP TABLE IF EXISTS {0}";
@@ -33,7 +33,7 @@ namespace ModbusCom
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             int length = currentDirectory.IndexOf("ModbusCom");
-            string projectPath = currentDirectory.Substring(0, length) + @"ModbusCom\";
+            string projectPath = currentDirectory.Substring(0, length) + @"ModbusCom\ModbusCom\";
             return projectPath;
         }
     }

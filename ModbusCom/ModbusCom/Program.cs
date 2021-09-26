@@ -11,7 +11,27 @@ namespace ModbusCom
     {
         static void Main(string[] args)
         {
-            TestHttpServer();
+            TestModbusDevice();
+        }
+
+        public static void TestModbusDevice()
+        {
+            void StartServer(object obj) => (obj as HttpServer).Start();
+
+            ushort startAddr = 100;
+            ushort registersCount = 3;
+            string[] regNames = new string[] { "Reg1", "Reg2", "Reg3" };
+            Dictionary<string, string[]> colsData = new Dictionary<string, string[]>()
+            {
+                {   AppConfig.DeviceRegTblName, regNames },
+            };
+            HttpServer server = new HttpServer(colsData);
+            Thread serverThread = new Thread(new ParameterizedThreadStart(StartServer));
+            serverThread.Start(server);
+
+            MasterSlaveCommunication connection = 
+                new MasterSlaveCommunication(startAddr, registersCount, regNames, "COM6");
+            connection.Establish(1);
         }
 
         public static void TestHttpServer()
@@ -36,14 +56,20 @@ namespace ModbusCom
                 }
                 return null;
             }
-            HttpServer server = new HttpServer();
+
+            Dictionary<string, string[]> columns = new Dictionary<string, string[]>()
+            {
+                { AppConfig.DeviceRegTblName, new string[] { "Reg1", "Reg2", "Reg3" } }
+            };
+            HttpServer server = new HttpServer(columns);
             Thread serverThread = new Thread(new ParameterizedThreadStart(StartServer));
             serverThread.Start(server);
 
             Dictionary<string, string> queryString = new Dictionary<string, string>()
             {
-                { "Name", "Igor" },
-                { "Id", "78" }
+                { "Reg1", "109" },
+                { "Reg2", "78" },
+                { "Reg3", "75" }
             };
 
             var answer = GetRequest(AppConfig.ServiceURL, queryString)?.Result;
