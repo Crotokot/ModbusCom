@@ -28,8 +28,8 @@ namespace ModbusCom
 
         public void Start()
         {
-            Console.WriteLine("Listening...");
             listener.Start();
+            Console.WriteLine("Listening...");
             while (true)
             {
                 var context = listener.GetContext();
@@ -60,9 +60,9 @@ namespace ModbusCom
 
             void MakeRow(ref StringBuilder stringBuilder, object[] values, bool header = false)
             {
-                string cellFormat = "<td>{0}</td>";
+                string cellFormat = "<td align=\"center\">{0}</td>";
                 if (header)
-                    cellFormat = "<th>{0}</th>";
+                    cellFormat = "<th align=\"center\">{0}</th>";
                 stringBuilder.Append("<tr>");
                 foreach (var val in values) stringBuilder.Append(string.Format(cellFormat, val));
                 stringBuilder.Append("</tr>");

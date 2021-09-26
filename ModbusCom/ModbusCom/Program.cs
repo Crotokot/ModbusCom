@@ -10,12 +10,15 @@ namespace ModbusCom
         static void Main(string[] args)
         {
             ushort startAddr = 0, regsCount = 10;
-            if (args.Length == 2)
+            string port = "COM6";
+            if (args.Length >= 2)
             {
                 try
                 {
                     startAddr = Convert.ToUInt16(args[0]);
                     regsCount = Convert.ToUInt16(args[1]);
+                    if (args.Length >= 3)
+                        port = args[2];
                 }
                 catch (FormatException)
                 {
@@ -26,9 +29,9 @@ namespace ModbusCom
                     Console.WriteLine($"Value is too big. Values must be ushort types.");
                 }
             }
-            Console.WriteLine($"startAddr was set to {startAddr} and regsCount was set to {regsCount}.");            
+            Console.WriteLine($"startAddr = {startAddr}, regsCount = {regsCount} and port = {port}.");            
 
-            RunApplication(startAddr, regsCount);
+            RunApplication(startAddr, regsCount, port);
         }
 
         private static string[] CorrectColNames(string[] regNames)
@@ -45,7 +48,7 @@ namespace ModbusCom
             return correctedRegNames.ToArray();
         }
 
-        public static void RunApplication(ushort startAddr, ushort registersCount)
+        public static void RunApplication(ushort startAddr, ushort registersCount, string port)
         {
             void StartServer(object server) => (server as HttpServer).Start();
 
@@ -61,7 +64,7 @@ namespace ModbusCom
             serverThread.Start(server);
 
             MasterSlaveCommunication connection = 
-                new MasterSlaveCommunication(startAddr, registersCount, CorrectColNames(regNames.ToArray()), "COM6");
+                new MasterSlaveCommunication(startAddr, registersCount, CorrectColNames(regNames.ToArray()), port);
             connection.Establish(1);
         }
     }
