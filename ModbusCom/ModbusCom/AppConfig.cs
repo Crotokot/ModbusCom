@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 
@@ -11,7 +9,8 @@ namespace ModbusCom
         private static string projectPath = GetProjectPath();
         private static string DataBasePath = projectPath + @"ModbusCom\DeviceInfo.mdf";
         public static string TablePagePath = projectPath + @"Data\TablePage.html";
-        public static string ConnectionString = //@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=A:\Job\Eris\ModbusTask\ModbusCom\ModbusCom\ModbusCom\DeviceInfo.mdf;Integrated Security=True";
+        //if database coudn't be find insert here your connection string
+        public static string ConnectionString = 
          $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DataBasePath};Integrated Security=True";
 
 

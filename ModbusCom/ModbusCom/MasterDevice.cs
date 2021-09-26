@@ -75,6 +75,20 @@ namespace ModbusCom
             master.WriteMultipleRegisters(slaveID, startAddr, regsValues);
         }
 
+        private void CorrectRegisterNames()
+        {
+            List<string> correctedRegNames = new List<string>();
+            foreach (var regName in slaveInfo.RegNames)
+            {
+                string correctedName = "Reg4";
+                for (int i = regName.Length; i < 4; i++)
+                    correctedName += "0";
+                correctedName += regName;
+                correctedRegNames.Add(correctedName);
+            }
+            slaveInfo.RegNames = correctedRegNames.ToArray();
+        }
+
         ~MasterDevice()
         {
             master.Dispose();

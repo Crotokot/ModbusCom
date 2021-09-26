@@ -29,9 +29,9 @@ namespace ModbusCom
         public void Start()
         {
             Console.WriteLine("Listening...");
+            listener.Start();
             while (true)
             {
-                listener.Start();
                 var context = listener.GetContext();
                 RequestHandler(context);
             }
@@ -53,7 +53,6 @@ namespace ModbusCom
             output.Write(buffer, 0, buffer.Length);
             // You must close the output stream.
             output.Close();
-            listener.Stop();
         }
 
         private string HandleGetRequest()
